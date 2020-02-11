@@ -2,11 +2,7 @@ var listaElment = document.querySelector('#app ul');
 var inputElement = document.querySelector( '#app input');
 var buttonElement =document.querySelector('#app button');
 
-var todos = [
-    "fazer café",
-    "jogar bola",
-    "aprender JS"
-];
+ var todos = JSON.parse(localStorage.getItem('lista_todo')) ||[];
 
 function renderizar(){
     listaElment.innerHTML = '';
@@ -37,10 +33,16 @@ function addTodos(){
     todos.push(todoText);
     inputElement.value ='';
     renderizar();
+    saveToStorage();
 }
 buttonElement.onclick = addTodos;
 
 function deleteTodo(pos){
     todos.splice(pos,1)
     renderizar();
+    saveToStorage();
+}
+function saveToStorage(){
+
+    localStorage.setItem('lista_todo',JSON.stringify(todos));
 }
