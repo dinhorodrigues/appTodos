@@ -9,12 +9,22 @@ var todos = [
 ];
 
 function renderizar(){
-
+    listaElment.innerHTML = '';
     for(todo of todos){
         var todoElement = document.createElement('li');
         var todoText = document.createTextNode(todo);
 
+        var linkTodo = document.createElement('a');
+        linkTodo.setAttribute('href','#');
+
+        var pos = todos.indexOf(todo);
+        linkTodo.setAttribute('onclick', 'deleteTodo('+pos+')');
+        var textLink = document.createTextNode('Excluir Todo');
+
+        linkTodo.appendChild(textLink);
+
         todoElement.appendChild(todoText);
+        todoElement.appendChild(linkTodo);
         listaElment.appendChild(todoElement);
     }
 
@@ -22,10 +32,15 @@ function renderizar(){
 renderizar();
 
 function addTodos(){
-    listaElment.innerHTML = '';
+   
     var todoText = inputElement.value;
     todos.push(todoText);
     inputElement.value ='';
     renderizar();
 }
 buttonElement.onclick = addTodos;
+
+function deleteTodo(pos){
+    todos.splice(pos,1)
+    renderizar();
+}
